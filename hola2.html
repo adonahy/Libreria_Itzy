@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Geolocalización">
+    <title>Geolocalización</title>
+<script type="text/javascript" language="javascript">// <![CDATA[
+function get_loc() {
+       if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(coordenadas);
+       }else{
+          alert('Este navegador es algo antiguo, actualiza para usar el API de localización');                  }
+}
+    function coordenadas(position) {
+      var lat = position.coords.latitude;
+      var lon = position.coords.longitude;
+      var map = document.getElementById("mapa");
+      map.src = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lon + "&amp;zoom=15&amp;size=600x480&amp;markers=color:red|label:A|" + lat + "," + lon + "&amp;sensor=false";
+}
+// ]]></script>
+  </head>
+  <body>
+    <a href="javascript:get_loc();">Mostrar localización</a>
+<br />
+  </body>
+</html>
