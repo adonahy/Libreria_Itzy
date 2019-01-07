@@ -1,6 +1,6 @@
 <?php
     require 'ini.php';
-    require 'connections/coneccion.php';
+    //require 'connection.php';
     require 'core.php';
 ?>
 
@@ -91,7 +91,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 <?php 
-    require 'pages/header.php';  
+    require 'header.php';  
     
     ?>
   
@@ -101,7 +101,7 @@
 if($security == 'go'){   
 
 
-  require 'pages/sidebar.php';  
+  require 'sidebar.php';  
 
 
 

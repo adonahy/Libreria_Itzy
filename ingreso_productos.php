@@ -1,20 +1,15 @@
-
 <?php
-    session_start();
-    session_unset();
-    $_SESSION = array();
-    session_destroy();
-    
+    require 'ini.php';
+    //require 'connection.php';
+    require 'core.php';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Libreria Itzy</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-
-
+  <title>Libreria ITZY</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,8 +23,6 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="dist/css/awhFr.css">
-  <link rel="stylesheet" href="dist/css/skins/awhFr.scss">
   <!-- Morris chart -->
   <link rel="stylesheet" href="bower_components/morris.js/morris.css">
   <!-- jvectormap -->
@@ -47,84 +40,213 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+    
+   <!-- <script>
+    (function(){
+	var content = document.getElementById("geolocation-test");
+
+	if (navigator.geolocation)
+	{
+		navigator.geolocation.getCurrentPosition(function(objPosition)
+		{
+			var lon = objPosition.coords.longitude;
+			var lat = objPosition.coords.latitude;
+
+			content.innerHTML = "<p><strong>Latitud:</strong> " + lat + "</p><p><strong>Longitud:</strong> " + lon + "</p>";
+
+		}, function(objPositionError)
+		{
+			switch (objPositionError.code)
+			{
+				case objPositionError.PERMISSION_DENIED:
+					content.innerHTML = "No se ha permitido el acceso a la posición del usuario.";
+				break;
+				case objPositionError.POSITION_UNAVAILABLE:
+					content.innerHTML = "No se ha podido acceder a la información de su posición.";
+				break;
+				case objPositionError.TIMEOUT:
+					content.innerHTML = "El servicio ha tardado demasiado tiempo en responder.";
+				break;
+				default:
+					content.innerHTML = "Error desconocido.";
+			}
+		}, {
+			maximumAge: 75000,
+			timeout: 15000
+		});
+	}
+	else
+	{
+		content.innerHTML = "Su navegador no soporta la API de geolocalización.";
+	}
+})();
+
+    
+    
+    </script>-->
+    
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
-  
-
-   </head>
+</head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>ITZY</b></span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Libreria</b> ITZY</span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button -->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-
-      
-    </nav>
-  </header>
+<?php 
+    require 'header.php';  
+    
+    ?>
   
   <!-- SIDEBAR MENU -->
 
-  <?php //require 'pages/sidebar.php';  ?>
+  <?php 
+if($security == 'go'){   
 
+
+  require 'sidebar.php';  
+
+
+
+      
+        ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      
+     
+      <h1>
+        Ingreso de producto
+        <small>Mercaderia</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Productos</a></li>
+        <li class="active">Ingreso de productos</li>
+      </ol>
     </section>
+      <div class="pad margin no-print">
+            <div class="callout callout-info" style="margin-bottom: 0!important;">
+                <h4><i class="fa fa-info"></i> Nota:</h4>
+                Escanea el codigo de barra y selecciona continuar para ver si el producto existe o hay que ingresar un nuevo producto.
+            </div>
+        </div>
+
+    <?php
+    $sku    = $_POST['sku'];
+    $flag   = $_POST['flag'];
+    if($flag=="verificacion"){
+    $
+      
+    $query1 =   "SELECT 
+                    COUNT(`sku`), codigo, nombre, marca, tipo, stock, fecha_ingreso,descripcion 
+                FROM `
+                    inventario` 
+                WHERE 
+                    sku='$sku'";  
+    $queryc =   mysqli_query($con, $query1);
+    $result =   mysqli_fetch_array($queryc);
+    
+    $sku =   $result['COUNT(`sku`)'];
+        
+        }
+      ?>
 
     <!-- Main content -->
     <section class="content">
      
-     <div class="login-wrap">
-    <div class="login">
-      <div class="avatar">
+      
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-5 connectedSortable">
+          <!-- Custom tabs (Charts with tabs)-->
+          
+          
+          
+          <p class="margin">SKU DE PRODUCTO </p>
+            <form class="form-horizontal" method="post">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" id="sku" name="sku">
+                <input type="hidden" class="form-control" id="flag" name="flag" value="verificacion">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-info btn-flat">Go!</button>
+                    </span>
+              </div>
+            </form>
+          
+
+        </section>
+          
+          <?php 
+          
+        if($sku>0){
+            
+            ?>
+          <section class="col-lg-5 connectedSortable">
+              <form class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> Remember me
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button type="submit" class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-info pull-right">Sign in</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+              
+          </section>  
+          
+          
+          <?php
+            
+        }
+          
+          ?>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        
       </div>
-      <span class="user">Iniciar Sesion</span><br>
-<?php 
-error_reporting(0);
-    $error = $_GET['error'];
-
-    if($error ==1){
-      echo'<span class="user" style="color:red;">* Usuario o contraseña incorrecta</span>';
-    }
-?>
-      <form id="login" class="login-form" action="dashboard.php" method="post">
-        <input type="text" placeholder="Usuario" name="user" class="pass" id="user"/><span class="arrow">&rarr;</span>
-        <input type="password" placeholder="Contraseña" name="pass" class="pass" id="pass"/><span class="arrow">&rarr;</span>
-        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
-      </form>
-
-    </div>
-  </div>
-    
-
-
-
-<!--Inspiration taken from both Steven Shobert: https://codepen.io/stevenschobert/pen/kpcBK
-and of course Bennet Feely: https://codepen.io/bennettfeely/pen/ErFGv-->
-
-
+      <!-- /.row (main row) -->
 
     </section>
     <!-- /.content -->
+
+    
   </div>
   <!-- /.content-wrapper -->
-  
+    
+    
+  <footer class="main-footer no-print">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 1.0
+    </div>
+    <strong>Copyright &copy; 2019-2020 <a href="http://www.selvinbenito.com">Selvin Benito</a>.</strong> All rights
+    reserved.
+  </footer>
+    
+
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
@@ -320,15 +442,36 @@ and of course Bennet Feely: https://codepen.io/bennettfeely/pen/ErFGv-->
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
+
+<?php 
+
+} 
+else {
+
+
+  echo"     
+      <script> 
+
+      window.location.replace('index.php?error=1'); 
+      </script>";
+
+
+}
+
+
+?>
+
+
+
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->
@@ -360,4 +503,3 @@ and of course Bennet Feely: https://codepen.io/bennettfeely/pen/ErFGv-->
 <script src="dist/js/demo.js"></script>
 </body>
 </html>
-{}

@@ -1,5 +1,5 @@
 <?php
-    require 'connection.php';
+    require 'connections/coneccion.php';
     date_default_timezone_set('America/Guatemala');
     $da = date("d/m/Y");
     $f  = date("m/d/Y");

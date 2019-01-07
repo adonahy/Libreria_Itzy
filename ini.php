@@ -1,7 +1,7 @@
 <?php 
     
     session_start();
-    require 'connection.php';
+    require 'connections/coneccion.php';
     
     
     error_reporting(0);
