@@ -230,28 +230,66 @@ if($security == 'go'){
                <form class="form-horizontal">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">SKU</label>
 
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    <input type="text" class="form-control" id="sku" name="sku" placeholder="SKU">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Código</label>
 
                   <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                    <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código">
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Remember me
-                      </label>
-                    </div>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Producto</label>
+
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="producto" name="producto" placeholder="Password">
                   </div>
                 </div>
+                <div class="form-group">
+                    <?php 
+                        $query  =   "
+                                    SELECT * 
+                                    FROM 
+                                    marcas ";
+                        
+                        $marca  =   mysqli_query($con, $query);
+                        $resultm=   mysqli_fetch_array($marca);
+        
+                        $nombre =   $resultm['nombre'];
+                        $id_marca =   $resultm['id_marca'];
+        
+                    ?>
+                <label>Marca</label>
+                <select class="form-control select2" name="marca" style="width: 100%;">
+                     <option value=""></option>
+                  <?php 
+                    
+                    while( $resultm=   mysqli_fetch_array($marca)){
+                        $nombre =   $resultm['nombre'];
+                        $id_marca =   $resultm['id_marca'];
+                    ?>
+                    
+                    
+                    <option value="<?php echo "$id_marca";?>"><?php echo "$nombre";?></option>
+                  
+                    <?php
+                      }
+                    ?>
+                </select>
+              </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Código</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código">
+                  </div>
+                </div>
+                
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
