@@ -131,21 +131,23 @@ if($security == 'go'){
         </div>
 
     <?php
-    $sku    = $_POST['sku'];
-    $flag   = $_POST['flag'];
+    $sku    = $_GET['sku'];
+    $flag   = $_GET['flag'];
     if($flag=="verificacion"){
     $
       
     $query1 =   "SELECT 
                     COUNT(`sku`), codigo, nombre, marca, tipo, stock, fecha_ingreso,descripcion 
                 FROM `
-                    inventario` 
+                    inventario 
                 WHERE 
                     sku='$sku'";  
     $queryc =   mysqli_query($con, $query1);
     $result =   mysqli_fetch_array($queryc);
     
     $sku =   $result['COUNT(`sku`)'];
+        
+        echo "Hola" . $sku;
         
         }
       ?>
@@ -163,12 +165,12 @@ if($security == 'go'){
           
           
           <p class="margin">SKU DE PRODUCTO </p>
-            <form class="form-horizontal" method="post">
+            <form class="form-horizontal" method="get">
               <div class="input-group input-group-sm">
                 <input type="text" class="form-control" id="sku" name="sku">
                 <input type="hidden" class="form-control" id="flag" name="flag" value="verificacion">
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-info btn-flat">Go!</button>
+                      <button type="submit" class="btn btn-info btn-flat">Go!</button>
                     </span>
               </div>
             </form>
@@ -177,7 +179,7 @@ if($security == 'go'){
         </section>
           
           <?php 
-          
+        if($flag=="verificacion" and $sku!=""){
         if($sku>0){
             
             ?>
@@ -304,7 +306,10 @@ if($security == 'go'){
           
           
           <?php
-    }
+    }}else{
+            echo'<h2>Por favor ingrese datos en SKU</h2>';
+            echo "Este es el " . $sku;
+        }
           
           ?>
         <!-- /.Left col -->
