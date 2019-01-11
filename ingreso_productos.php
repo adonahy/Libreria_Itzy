@@ -137,17 +137,17 @@ if($security == 'go'){
     $
       
     $query1 =   "SELECT 
-                    COUNT(`sku`), codigo, nombre, marca, tipo, stock, fecha_ingreso,descripcion 
-                FROM `
-                    inventario 
+                    COUNT(sku), codigo, nombre, marca, tipo, stock, fecha_ingreso, descripcion 
+                FROM
+                inventario 
                 WHERE 
                     sku='$sku'";  
     $queryc =   mysqli_query($con, $query1);
     $result =   mysqli_fetch_array($queryc);
     
-    $sku =   $result['COUNT(`sku`)'];
+    $sku1 =   $result['COUNT(`sku`)'];
         
-        echo "Hola" . $sku;
+        echo "Hola" . $sku1;
         
         }
       ?>
@@ -180,7 +180,7 @@ if($security == 'go'){
           
           <?php 
         if($flag=="verificacion" and $sku!=""){
-        if($sku>0){
+        if($sku1>0){
             
             ?>
           <section class="col-lg-5 connectedSortable">
@@ -239,7 +239,7 @@ if($security == 'go'){
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Código</label>
+                  <label for="inputText3" class="col-sm-2 control-label">Código</label>
 
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código">
@@ -249,7 +249,7 @@ if($security == 'go'){
                   <label for="inputPassword3" class="col-sm-2 control-label">Producto</label>
 
                   <div class="col-sm-10">
-                    <input type="password" class="form-control" id="producto" name="producto" placeholder="Password">
+                    <input type="password" class="form-control" id="producto" name="producto" placeholder="Producto">
                   </div>
                 </div>
                 <div class="form-group">
@@ -260,10 +260,7 @@ if($security == 'go'){
                                     marcas ";
                         
                         $marca  =   mysqli_query($con, $query);
-                        $resultm=   mysqli_fetch_array($marca);
-        
-                        $nombre =   $resultm['nombre'];
-                        $id_marca =   $resultm['id_marca'];
+                        
         
                     ?>
                 <label>Marca</label>
@@ -284,8 +281,70 @@ if($security == 'go'){
                     ?>
                 </select>
               </div>
+                  <div class="form-group">
+                    <?php 
+                        $query  =   "
+                                    SELECT * 
+                                    FROM 
+                                    tipo ";
+                        
+                        $tipos  =   mysqli_query($con, $query);
+                        
+        
+                    ?>
+                <label>Tipo</label>
+                <select class="form-control select2" name="tipo" style="width: 100%;">
+                     <option value=""></option>
+                  <?php 
+                    
+                    while( $resultti=   mysqli_fetch_array($tipos)){
+                        $tipo =   $resultti['tipo'];
+                        $id_tipo =   $resultti['id_tipo'];
+                    ?>
+                    
+                    
+                    <option value="<?php echo "$id_tipo";?>"><?php echo "$tipo";?></option>
+                  
+                    <?php
+                      }
+                    ?>
+                </select>
+              </div>
+                  <!-- INICIO DE TAMAÑO -->
+                  <div class="form-group">
+                    <?php 
+                        $query  =   "
+                                    SELECT * 
+                                    FROM 
+                                    tama ";
+                        
+                        $tama  =   mysqli_query($con, $query);
+                        
+        
+                    ?>
+                <label>Tamaño</label>
+                <select class="form-control select2" name="tam" style="width: 100%;">
+                     <option value=""></option>
+                  <?php 
+                    
+                    while( $resultt=   mysqli_fetch_array($tama)){
+                        $tamanio =   $resultt['tama'];
+                        $id_tamanio =   $resultt['id_tama'];
+                    ?>
+                    
+                    
+                    <option value="<?php echo "$id_tamanio";?>"><?php echo "$tamanio";?></option>
+                  
+                    <?php
+                      }
+                    ?>
+                </select>
+              </div>
+                  
+                  <!-- FIn de tamaño -->
+                  
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Código</label>
+                  <label for="inputText3" class="col-sm-2 control-label">Tipo</label>
 
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código">

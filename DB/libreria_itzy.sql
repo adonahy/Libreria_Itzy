@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-01-2019 a las 03:33:10
+-- Tiempo de generación: 11-01-2019 a las 04:33:20
 -- Versión del servidor: 10.1.32-MariaDB
 -- Versión de PHP: 5.6.36
 
@@ -95,6 +95,18 @@ CREATE TABLE `marcas` (
   `nombre` varchar(60) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `marcas`
+--
+
+INSERT INTO `marcas` (`id_marca`, `nombre`, `status`) VALUES
+(1, 'MAPED', 0),
+(2, 'BIC', 0),
+(3, 'Pasitos', 0),
+(4, 'VIVO', 0),
+(5, 'FAST', 0),
+(6, 'Tucan', 0);
 
 -- --------------------------------------------------------
 
@@ -474,15 +486,24 @@ CREATE TABLE `proveedores` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tamaños`
+-- Estructura de tabla para la tabla `tama`
 --
 
-CREATE TABLE `tamaños` (
-  `id_tamaño` int(11) NOT NULL,
-  `tamaño` int(11) NOT NULL,
-  `medida` int(11) NOT NULL,
+CREATE TABLE `tama` (
+  `id_tama` int(11) NOT NULL,
+  `tama` varchar(50) NOT NULL,
+  `medida` varchar(11) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tama`
+--
+
+INSERT INTO `tama` (`id_tama`, `tama`, `medida`, `status`) VALUES
+(1, 'Grande', '0', 0),
+(2, 'Mediano', '0', 0),
+(3, 'Pequeño', '0', 0);
 
 -- --------------------------------------------------------
 
@@ -492,9 +513,33 @@ CREATE TABLE `tamaños` (
 
 CREATE TABLE `tipo` (
   `id_tipo` int(11) NOT NULL,
-  `tipo` int(11) NOT NULL,
+  `tipo` varchar(50) NOT NULL,
   `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tipo`
+--
+
+INSERT INTO `tipo` (`id_tipo`, `tipo`, `status`) VALUES
+(1, 'Tijeras', 0),
+(2, 'Cuadernos_engrapados', 0),
+(3, 'Cuadernos_cosidos', 0),
+(4, 'Cuadernos_espirales', 0),
+(5, 'Diccionarios', 0),
+(6, 'Borradores', 0),
+(7, 'Lapiceros', 0),
+(8, 'Lapices', 0),
+(9, 'Silicon_liquido', 0),
+(10, 'Silicon_barra', 0),
+(11, 'Resistol', 0),
+(12, 'Juguetes', 0),
+(13, 'Crayones_madera', 0),
+(14, 'Crayones_cera', 0),
+(15, 'Tablas', 0),
+(16, 'Pliegos', 0),
+(17, 'Hojas', 0),
+(18, 'tape', 0);
 
 -- --------------------------------------------------------
 
@@ -570,10 +615,10 @@ ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`id_proveedor`);
 
 --
--- Indices de la tabla `tamaños`
+-- Indices de la tabla `tama`
 --
-ALTER TABLE `tamaños`
-  ADD PRIMARY KEY (`id_tamaño`);
+ALTER TABLE `tama`
+  ADD PRIMARY KEY (`id_tama`);
 
 --
 -- Indices de la tabla `tipo`
@@ -609,7 +654,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `municipios`
@@ -624,16 +669,16 @@ ALTER TABLE `proveedores`
   MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `tamaños`
+-- AUTO_INCREMENT de la tabla `tama`
 --
-ALTER TABLE `tamaños`
-  MODIFY `id_tamaño` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tama`
+  MODIFY `id_tama` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo`
 --
 ALTER TABLE `tipo`
-  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
