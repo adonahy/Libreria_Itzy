@@ -33,6 +33,25 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+    
+    
+   
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/iCheck/all.css">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+ 
+    
+    
+    
+    
+    
+    
+    
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -131,9 +150,119 @@ if($security == 'go'){
         </div>
 
     <?php
-    $sku    = $_GET['sku'];
-    $flag   = $_GET['flag'];
-    if($flag=="verificacion"){
+    $sku    = $_POST['sku'];
+    $flag   = $_POST['flag'];
+    
+    $mensaje=   "";
+    
+    switch($flag){
+            
+        case "verificacion":
+            $query1 =   "SELECT 
+                        COUNT(sku), codigo, nombre, marca, tipo, stock, descripcion, tama, precio_venta, precio_compra 
+                        FROM
+                        inventario 
+                        WHERE 
+                        sku='$sku'";  
+             //error_log("QUERY PAGAR #2 $query1");
+            $queryc =   mysqli_query($con, $query1);
+            $result =   mysqli_fetch_array($queryc);
+    
+            $sku1       =   $result['COUNT(sku)'];
+            $codigo     =   $result['codigo'];
+            $producto   =   $result['nombre'];
+            $marca      =   $result['marca'];
+            $tipo       =   $result['tipo'];
+            $descrip    =   $result['descripcion'];
+            $no_product =   $result['stock'];
+            $tam        =   $result['tama'];
+            $p_venta    =   $result['precio_venta'];
+            $p_compra   =   $result['precio_compra'];
+            
+            
+        
+           // echo "Hola" . $sku1;
+            
+            break;
+            
+        case "nuevo":
+            
+            $sku_nuevo  =   $_POST['sku'];
+            $codigo     =   $_POST['codigo'];
+            $producto   =   $_POST['producto'];
+            $marca      =   $_POST['marca'];
+            $tipo       =   $_POST['tipo'];
+            $tam        =   $_POST['tam'];
+            $descrip    =   $_POST['descrip'];
+            $no_product =   $_POST['noproduc'];
+            $p_venta    =   $_POST['p_venta'];
+            $p_compra   =   $_POST['p_compra'];
+            
+            $query1 =   "SELECT 
+                        COUNT(sku), codigo, nombre, marca, tipo, stock, fecha_ingreso, descripcion 
+                        FROM
+                        inventario 
+                        WHERE 
+                        sku='$sku'";  
+             //error_log("QUERY PAGAR #2 $query1");
+            $queryc =   mysqli_query($con, $query1);
+            $result =   mysqli_fetch_array($queryc);
+    
+            $stock =   $result['stock'];
+            
+            $nuevo_stock = $stock + $no_product;
+            
+            
+           // $mensaje = "nuevo producto" . $sku_nuevo . $codigo . $producto . $marca . $tipo . $tam . $descrip . $no_product ;
+        // error_log("QUERY nuevo #2 $mensaje");
+            
+            $query1 =   "INSERT INTO inventario (sku, codigo, nombre, marca, tipo, tama, descripcion, minimo, stock, ingreso_producto, fecha_ingreso, precio_compra, precio_venta) VALUES ('$sku_nuevo','$codigo','$producto','$marca','$tipo','$tam','$descrip','3','$nuevo_stock','$no_product','$da','$p_compra','$p_venta')";  
+            $queryc =   mysqli_query($con, $query1);
+            
+            
+             echo "<h3> Se ha ingresado correctamente el producto " . $producto . " con codigo " . $codigo . "</h3>";
+            
+            
+            break;
+            
+        case "actualizacion":
+            $sku_nuevo  =   $_POST['sku'];
+            $codigo     =   $_POST['codigo'];
+            $producto   =   $_POST['producto'];
+            $marca      =   $_POST['marca'];
+            $tipo       =   $_POST['tipo'];
+            $tam        =   $_POST['tam'];
+            $descrip    =   $_POST['descrip'];
+            $no_product =   $_POST['noproduc'];
+            $p_venta    =   $_POST['p_venta'];
+            $p_compra   =   $_POST['p_compra'];
+            
+            
+            $query1 =   "SELECT 
+                        sku, stock 
+                        FROM
+                        inventario 
+                        WHERE 
+                        sku='$sku_nuevo'";  
+             //error_log("QUERY PAGAR #2 $query1");
+            $queryc =   mysqli_query($con, $query1);
+            $result =   mysqli_fetch_array($queryc);
+    
+            $stock =   $result['stock'];
+            
+            $nuevo_stock = $stock + $no_product;
+            
+            $query1 =   "UPDATE inventario SET stock ='$nuevo_stock', ingreso_producto='$no_product', fecha_ingreso='$da', precio_compra='$p_compra', precio_venta='$p_venta' WHERE sku = '$sku_nuevo'";  
+            $queryc =   mysqli_query($con, $query1);
+            
+            echo "<h3> Se han ingresado " . $no_product . " nuevos productos de " . $producto ."</h3>";
+            
+            break;
+            
+    }
+    
+    
+   /* if($flag=="verificacion"){
     $
       
     $query1 =   "SELECT 
@@ -149,7 +278,7 @@ if($security == 'go'){
         
         echo "Hola" . $sku1;
         
-        }
+        }*/
       ?>
 
     <!-- Main content -->
@@ -165,7 +294,7 @@ if($security == 'go'){
           
           
           <p class="margin">SKU DE PRODUCTO </p>
-            <form class="form-horizontal" method="get">
+            <form class="form-horizontal" method="post">
               <div class="input-group input-group-sm">
                 <input type="text" class="form-control" id="sku" name="sku">
                 <input type="hidden" class="form-control" id="flag" name="flag" value="verificacion">
@@ -183,41 +312,89 @@ if($security == 'go'){
         if($sku1>0){
             
             ?>
+          <!-- ***** ACTUALIZACION DE PRODUCTOS  ****** -->
+          
           <section class="col-lg-5 connectedSortable">
-              <form class="form-horizontal">
+               <h1><small>Ingrese la nueva cantidad del siguiente producto</small></h1>
+               <form class="form-horizontal" method="post">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">SKU</label>
 
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                    <input type="text" class="form-control" id="sku1" name="sku1" value="<?php echo $sku; ?>" disabled >
+                      <input type="hidden" class="form-control" id="sku" name="sku" value="<?php echo $sku; ?>" >
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                  <label for="inputText3" class="col-sm-2 control-label">Código</label>
 
                   <div class="col-sm-10">
-                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                    <input type="text" class="form-control" id="codigo1" name="codigo1" value="<?php echo $codigo; ?>" disabled>
+                      <input type="hidden" class="form-control" id="codigo" name="codigo" value="<?php echo $codigo; ?>">
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Remember me
-                      </label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Producto</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="producto1" name="producto1" value="<?php echo $producto; ?>" disabled>
+                      <input type="hidden" class="form-control" id="producto" name="producto" value="<?php echo $producto; ?>">
+                  </div>
+                </div>
+                                  
+                                    
+                <div class="form-group">
+                  <label for="inputText3" class="col-sm-2 control-label">Descripcion</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="descrip1" name="descrip1" value="<?php echo $descrip; ?>" disabled>
+                      <input type="hidden" class="form-control" id="descrip" name="descrip" value="<?php echo $descrip; ?>">
+                  </div>
+                </div>
+                  
+                  
+                  
+                <div class="form-group">
+                <label for="inputText3" class="col-sm-2 control-label">Precio Venta</label>
+                    <div class="col-sm-4">
+                <div class="input-group">
+                <span class="input-group-addon">Q</span>
+                <input type="text" class="form-control" id="p_venta" name="p_venta" value="<?php echo $p_venta; ?>">
+                
+                </div>
                     </div>
+                </div>
+                  <div class="form-group">
+                  <label for="inputText3" class="col-sm-2 control-label">Precio Compra</label>
+                      <div class="col-sm-4">
+                  <div class="input-group">
+                  <span class="input-group-addon">Q</span>
+                  <input type="text" class="form-control" id="p_compra" name="p_compra" value="<?php echo $p_compra; ?>">
+                
+                  </div>
+                      </div>
+                  
+                </div>
+                  
+                <div class="form-group">
+                  <label for="inputText3" class="col-sm-2 control-label">No. de productos</label>
+
+                  <div class="col-sm-5">
+                    <input type="numero" class="form-control" id="noproduc" name="noproduc" value="<?php echo $no_product; ?>">
                   </div>
                 </div>
+                
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button type="submit" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-info pull-right">Sign in</button>
+                <input type="hidden"  name="flag" value="actualizacion">
+                <!--<button type="submit" class="btn btn-default">Cancel</button>-->
+                <button type="submit" class="btn btn-info pull-right">Actualizar</button>
               </div>
               <!-- /.box-footer -->
             </form>
-              
+               
           </section>  
           
           
@@ -227,15 +404,17 @@ if($security == 'go'){
     else {
        // echo"Mostrar esto.";
         ?>
+    <!-- ***** INGRESO DE NUEVOS PRODUCTOS  ****** -->
            <section class="col-lg-5 connectedSortable">
                <h1><small>No existe el producto, ingrese el producto a continuación.</small></h1>
-               <form class="form-horizontal">
+               <form class="form-horizontal" method="post">
               <div class="box-body">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">SKU</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="sku" name="sku" placeholder="SKU">
+                    <input type="text" class="form-control" id="sku1" name="sku1" value="<?php echo $sku; ?>" disabled>
+                      <input type="hidden" class="form-control" id="sku" name="sku" value="<?php echo $sku; ?>" >
                   </div>
                 </div>
                 <div class="form-group">
@@ -249,7 +428,7 @@ if($security == 'go'){
                   <label for="inputPassword3" class="col-sm-2 control-label">Producto</label>
 
                   <div class="col-sm-10">
-                    <input type="password" class="form-control" id="producto" name="producto" placeholder="Producto">
+                    <input type="text" class="form-control" id="producto" name="producto" placeholder="Producto">
                   </div>
                 </div>
                 <div class="form-group">
@@ -344,18 +523,42 @@ if($security == 'go'){
                   <!-- FIn de tamaño -->
                   
                 <div class="form-group">
-                  <label for="inputText3" class="col-sm-2 control-label">Tipo</label>
+                  <label for="inputText3" class="col-sm-2 control-label">Descripcion</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Código">
+                    <input type="text" class="form-control" id="descrip" name="descrip" placeholder="Descripción">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputText3" class="col-sm-2 control-label">Precio Venta</label>
+
+                  <div class="col-sm-4">
+                    <input type="numero" class="form-control" id="p_venta" name="p_venta" >
+                  </div>
+                </div>
+                  
+                  <div class="form-group">
+                  <label for="inputText3" class="col-sm-2 control-label">Precio Compra</label>
+
+                  <div class="col-sm-4">
+                    <input type="numero" class="form-control" id="p_compra" name="p_compra" >
+                  </div>
+                </div>
+                  
+                <div class="form-group">
+                  <label for="inputText3" class="col-sm-2 control-label">No. de productos</label>
+
+                  <div class="col-sm-5">
+                    <input type="numero" class="form-control" id="noproduc" name="noproduc" placeholder="Cantidad">
                   </div>
                 </div>
                 
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button type="submit" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-info pull-right">Sign in</button>
+                <input type="hidden"  name="flag" value="nuevo">
+                <!--<button type="submit" class="btn btn-default">Cancel</button>-->
+                <button type="submit" class="btn btn-info pull-right">Ingresar</button>
               </div>
               <!-- /.box-footer -->
             </form>
@@ -367,7 +570,7 @@ if($security == 'go'){
           <?php
     }}else{
             echo'<h2>Por favor ingrese datos en SKU</h2>';
-            echo "Este es el " . $sku;
+           // echo "Este es el " . $mensaje;
         }
           
           ?>
@@ -648,5 +851,78 @@ else {
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+    <!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- InputMask -->
+<script src="plugins/input-mask/jquery.inputmask.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
+
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
 </body>
 </html>

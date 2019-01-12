@@ -29,7 +29,7 @@ echo '
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU PRINCIPAL</li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Ventas</span>
             <span class="pull-right-container">
@@ -38,7 +38,7 @@ echo '
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Precios</a></li>
+            <li ><a href="#"><i class="fa fa-circle-o"></i> Precios</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Venta</a></li>
           </ul>
         </li>

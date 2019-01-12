@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-01-2019 a las 04:33:20
+-- Tiempo de generación: 12-01-2019 a las 04:56:29
 -- Versión del servidor: 10.1.32-MariaDB
 -- Versión de PHP: 5.6.36
 
@@ -69,20 +69,32 @@ INSERT INTO `departamento` (`id_depto`, `departamento`) VALUES
 
 CREATE TABLE `inventario` (
   `id_inventario` int(11) NOT NULL,
-  `sku` varchar(50) NOT NULL,
-  `codigo` varchar(50) NOT NULL,
-  `nombre` varchar(60) NOT NULL,
+  `sku` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `codigo` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `nombre` varchar(60) CHARACTER SET latin1 NOT NULL,
   `marca` int(11) NOT NULL,
   `tipo` int(11) NOT NULL,
-  `tamaño` int(11) NOT NULL,
-  `descripcion` varchar(150) NOT NULL,
+  `tama` int(11) NOT NULL,
+  `descripcion` varchar(150) CHARACTER SET latin1 NOT NULL,
   `minimo` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
+  `precio_venta` decimal(15,2) NOT NULL,
+  `precio_compra` decimal(15,2) NOT NULL,
   `ingreso_producto` int(11) NOT NULL,
-  `fecha_ingreso` varchar(15) NOT NULL,
-  `fecha_proxima` varchar(15) NOT NULL,
+  `fecha_ingreso` varchar(15) CHARACTER SET latin1 NOT NULL,
+  `fecha_proxima` varchar(15) CHARACTER SET latin1 NOT NULL,
   `status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `inventario`
+--
+
+INSERT INTO `inventario` (`id_inventario`, `sku`, `codigo`, `nombre`, `marca`, `tipo`, `tama`, `descripcion`, `minimo`, `stock`, `precio_venta`, `precio_compra`, `ingreso_producto`, `fecha_ingreso`, `fecha_proxima`, `status`) VALUES
+(1, '7426500822028', 'vivocuadernoengra_rayado100', 'Cuaderno VIVO engrapado rayado 100 hojas', 4, 2, 3, 'Cuaderno pequeño engrapado rayado marca vivo 100 hojas', 3, 6, '4.25', '0.00', 6, '11/01/2019', '', 0),
+(2, '7426500822257', 'vivocuadercosidocarta_sinraya', 'Cuaderno VIVO cosido Sin raya Carta 100 hojas', 4, 3, 1, 'Cuaderno cosido sin rayas tamaño carta de 100 hojas varios colores', 3, 5, '8.50', '0.00', 5, '11/01/2019', '', 0),
+(3, '7426500822189', 'vivocuadernoengra_doblerayado40', 'Cuaderno VIVO engrapado rayado 40 hojas', 4, 2, 3, 'Cuaderno pequeÃ±o engrapado rayado marca vivo 40 hojas', 3, 5, '2.50', '0.00', 5, '11/01/2019', '', 0),
+(4, '4712302217708', 'borradorFastGrande_BF02', 'Borrador grande Fast BF02', 5, 6, 1, 'Borrador grande Fast BF02', 3, 16, '2.00', '0.00', 16, '11/01/2019', '', 0);
 
 -- --------------------------------------------------------
 
@@ -648,7 +660,7 @@ ALTER TABLE `departamento`
 -- AUTO_INCREMENT de la tabla `inventario`
 --
 ALTER TABLE `inventario`
-  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inventario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `marcas`
