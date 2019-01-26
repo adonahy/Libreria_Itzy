@@ -101,7 +101,7 @@
 if($security == 'go'){   
 
 
-  require 'pages/sidebar.php';  
+  require 'sidebar.php';  
 
 
 
@@ -124,12 +124,12 @@ if($security == 'go'){
 
     <?php
       
-    $query1 =   "SELECT COUNT(`dpi`) 
-                FROM `clientes` ";  
+    $query1 =   "SELECT COUNT(`sku`) 
+                FROM `inventario` ";  
     $queryc =   mysqli_query($con, $query1);
     $result =   mysqli_fetch_array($queryc);
     
-    $clientes_total =   $result['COUNT(`dpi`)'];
+    $clientes_total =   $result['COUNT(`sku`)'];
       ?>
 
     <!-- Main content -->
@@ -140,9 +140,9 @@ if($security == 'go'){
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3><?php echo $clientes_total;?></h3>
 
-              <p>Nuevos alumnos</p>
+              <p>Productos Ingresados</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>

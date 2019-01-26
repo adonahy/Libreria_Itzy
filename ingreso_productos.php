@@ -252,7 +252,7 @@ if($security == 'go'){
             
             $nuevo_stock = $stock + $no_product;
             
-            $query1 =   "UPDATE inventario SET stock ='$nuevo_stock', ingreso_producto='$no_product', fecha_ingreso='$da', precio_compra='$p_compra', precio_venta='$p_venta' WHERE sku = '$sku_nuevo'";  
+            $query1 =   "UPDATE inventario SET stock ='$nuevo_stock', ingreso_producto='$no_product',nombre='$producto', fecha_ingreso='$da', precio_compra='$p_compra', precio_venta='$p_venta' WHERE sku = '$sku_nuevo'";  
             $queryc =   mysqli_query($con, $query1);
             
             echo "<h3> Se han ingresado " . $no_product . " nuevos productos de " . $producto ."</h3>";
@@ -338,8 +338,8 @@ if($security == 'go'){
                   <label for="inputPassword3" class="col-sm-2 control-label">Producto</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="producto1" name="producto1" value="<?php echo $producto; ?>" disabled>
-                      <input type="hidden" class="form-control" id="producto" name="producto" value="<?php echo $producto; ?>">
+                    
+                      <input type="text" class="form-control" id="producto" name="producto" value="<?php echo $producto; ?>">
                   </div>
                 </div>
                                   
@@ -377,11 +377,19 @@ if($security == 'go'){
                   
                 </div>
                   
-                <div class="form-group">
+                  <div class="form-group">
                   <label for="inputText3" class="col-sm-2 control-label">No. de productos</label>
 
                   <div class="col-sm-5">
-                    <input type="numero" class="form-control" id="noproduc" name="noproduc" value="<?php echo $no_product; ?>">
+                    <input type="numero" class="form-control" id="noproduc2" name="noproduc2" value="<?php echo $no_product; ?>" disabled>
+                  </div>
+                </div>
+                  
+                <div class="form-group">
+                  <label for="inputText3" class="col-sm-2 control-label">Nuevo ingreso</label>
+
+                  <div class="col-sm-5">
+                    <input type="numero" class="form-control" id="noproduc" name="noproduc" value="0">
                   </div>
                 </div>
                 

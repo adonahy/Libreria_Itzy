@@ -38,7 +38,7 @@ echo '
             </span>
           </a>
           <ul class="treeview-menu">
-            <li ><a href="#"><i class="fa fa-circle-o"></i> Precios</a></li>
+            <li ><a href="lista_precios.php"><i class="fa fa-circle-o"></i> Precios</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i> Venta</a></li>
           </ul>
         </li>
